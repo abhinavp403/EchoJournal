@@ -1,4 +1,4 @@
-package com.plcoding.echojournal
+package dev.abhinav.echojournal
 
 import org.junit.Test
 
