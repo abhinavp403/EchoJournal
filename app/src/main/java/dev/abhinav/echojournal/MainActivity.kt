@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.abhinav.echojournal.core.presentation.designsystem.theme.EchoJournalTheme
 import dev.abhinav.echojournal.echos.presentation.echos.EchosRoot
+import dev.abhinav.echojournal.echos.presentation.echos.components.EchoExpandableText
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +18,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EchoJournalTheme {
-                EchosRoot()
+                EchoExpandableText(
+                    text = buildString{
+                        repeat(200) {
+                            append("Hello")
+                        }
+                    }
+                )
             }
         }
     }
