@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.abhinav.echojournal.core.presentation.designsystem.theme.bgGradient
+import dev.abhinav.echojournal.echos.presentation.echos.components.EchoFilterRow
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchoRecordFloatingActionButton
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchosEmptyBackground
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchosTopBar
@@ -60,6 +61,18 @@ fun EchosScreen(
                 )
                 .padding(innerPadding)
         ) {
+            EchoFilterRow(
+                moodChipContent = state.moodChipContent,
+                hasActiveMoodFilters = state.hasActiveMoodFilters,
+                selectedEchoFilterChip = state.selectedEchoFilterChip,
+                moods = state.moods,
+                topicChipTitle = state.topicChipTitle,
+                hasActiveTopicFilters = state.hasActiveTopicFilters,
+                topics = state.topics,
+                onAction = onAction,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
             when {
                 state.isLoadingData -> {
                     CircularProgressIndicator(
@@ -77,6 +90,7 @@ fun EchosScreen(
                             .fillMaxWidth()
                     )
                 }
+                else -> {}
             }
         }
     }
