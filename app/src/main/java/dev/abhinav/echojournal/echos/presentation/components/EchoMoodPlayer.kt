@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import dev.abhinav.echojournal.core.presentation.designsystem.theme.*
 import dev.abhinav.echojournal.core.presentation.util.formatMMSS
 import dev.abhinav.echojournal.echos.presentation.echos.models.PlaybackState
+import dev.abhinav.echojournal.echos.presentation.echos.models.TrackSizeInfo
 import dev.abhinav.echojournal.echos.presentation.models.MoodUi
 import kotlin.time.Duration
 
@@ -32,6 +33,7 @@ fun EchoMoodPlayer(
     powerRatios: List<Float>,
     onPlayClick: () -> Unit,
     onPauseClick: () -> Unit,
+    onTrackSizeAvailable: (TrackSizeInfo) -> Unit,
     modifier: Modifier = Modifier,
     amplitudeBarWidth: Dp = 5.dp,
     amplitudeBarSpacing: Dp = 4.dp,
