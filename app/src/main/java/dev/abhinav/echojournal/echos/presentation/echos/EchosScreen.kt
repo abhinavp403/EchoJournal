@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.abhinav.echojournal.core.presentation.designsystem.theme.bgGradient
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchoFilterRow
+import dev.abhinav.echojournal.echos.presentation.echos.components.EchoList
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchoRecordFloatingActionButton
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchosEmptyBackground
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchosTopBar
@@ -90,7 +91,20 @@ fun EchosScreen(
                             .fillMaxWidth()
                     )
                 }
-                else -> {}
+                else -> {
+                    EchoList(
+                        sections = state.echoDaySections,
+                        onPlayClick = {
+                            onAction(EchosAction.OnPlayEchoClick(it))
+                        },
+                        onPauseClick = {
+                            onAction(EchosAction.OnPauseClick)
+                        },
+                        onTrackSizeAvailable = { trackSize ->
+                            onAction(EchosAction.OnTrackSizeAvailable(trackSize))
+                        }
+                    )
+                }
             }
         }
     }
