@@ -32,7 +32,7 @@ fun EchoPlaybackButton(
     ) {
         Icon(
             imageVector = when(playbackState) {
-                PlaybackState.PLAYING -> Pause
+                PlaybackState.PLAYING -> Icons.Filled.Pause
                 PlaybackState.PAUSED,
                 PlaybackState.STOPPED -> Icons.Filled.PlayArrow
             },
