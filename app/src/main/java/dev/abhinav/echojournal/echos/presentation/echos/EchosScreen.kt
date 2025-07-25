@@ -25,10 +25,11 @@ import dev.abhinav.echojournal.echos.presentation.echos.components.EchoRecordFlo
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchosEmptyBackground
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchosTopBar
 import dev.abhinav.echojournal.echos.presentation.echos.models.AudioCaptureMethod
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun EchosRoot(
-    viewModel: EchosViewModel = viewModel()
+    viewModel: EchosViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
