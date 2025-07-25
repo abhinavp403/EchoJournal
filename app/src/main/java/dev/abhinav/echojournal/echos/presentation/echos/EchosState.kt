@@ -7,11 +7,13 @@ import dev.abhinav.echojournal.core.presentation.util.UiText
 import dev.abhinav.echojournal.echos.presentation.echos.models.EchoDaySection
 import dev.abhinav.echojournal.echos.presentation.echos.models.EchoFilterChip
 import dev.abhinav.echojournal.echos.presentation.echos.models.MoodChipContent
+import dev.abhinav.echojournal.echos.presentation.echos.models.AudioCaptureMethod
 import dev.abhinav.echojournal.echos.presentation.models.EchoUi
 import dev.abhinav.echojournal.echos.presentation.models.MoodUi
 
 data class EchosState(
     val echos: Map<UiText, List<EchoUi>> = emptyMap(),
+    val currentCaptureMethod: AudioCaptureMethod? = null,
     val hasEchosRecorded: Boolean = false,
     val hasActiveTopicFilters: Boolean = false,
     val hasActiveMoodFilters: Boolean = false,
