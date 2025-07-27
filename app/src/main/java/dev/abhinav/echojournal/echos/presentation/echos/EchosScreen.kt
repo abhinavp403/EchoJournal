@@ -14,6 +14,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -21,6 +22,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.abhinav.echojournal.R
 import dev.abhinav.echojournal.core.presentation.designsystem.theme.bgGradient
 import dev.abhinav.echojournal.core.presentation.util.ObserveAsEvents
+import dev.abhinav.echojournal.core.presentation.util.isAppInForeground
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchoFilterRow
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchoList
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchoRecordFloatingActionButton
@@ -38,6 +40,7 @@ fun EchosRoot(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val isAppInForeground by isAppInForeground()
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
@@ -57,6 +60,12 @@ fun EchosRoot(
             is EchosEvent.OnDoneRecording -> {
                 Timber.d("Recording successful!")
             }
+        }
+    }
+
+    LaunchedEffect(isAppInForeground, state.recordingState) {
+        if(state.recordingState == RecordingState.NORMAL_CAPTURE && !isAppInForeground) {
+            viewModel.onAction(EchosAction.OnPauseRecordingClick)
         }
     }
 
