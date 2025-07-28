@@ -23,6 +23,7 @@ import dev.abhinav.echojournal.R
 import dev.abhinav.echojournal.core.presentation.designsystem.theme.bgGradient
 import dev.abhinav.echojournal.core.presentation.util.ObserveAsEvents
 import dev.abhinav.echojournal.core.presentation.util.isAppInForeground
+import dev.abhinav.echojournal.echos.domain.recording.RecordingDetails
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchoFilterRow
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchoList
 import dev.abhinav.echojournal.echos.presentation.echos.components.EchoRecordFloatingActionButton
@@ -32,10 +33,10 @@ import dev.abhinav.echojournal.echos.presentation.echos.components.EchosTopBar
 import dev.abhinav.echojournal.echos.presentation.echos.models.AudioCaptureMethod
 import dev.abhinav.echojournal.echos.presentation.echos.models.RecordingState
 import org.koin.androidx.compose.koinViewModel
-import timber.log.Timber
 
 @Composable
 fun EchosRoot(
+    onNavigateToCreateEcho: (RecordingDetails) -> Unit,
     viewModel: EchosViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -58,7 +59,7 @@ fun EchosRoot(
                 Toast.makeText(context, context.getString(R.string.audio_recording_was_too_short), Toast.LENGTH_LONG).show()
             }
             is EchosEvent.OnDoneRecording -> {
-                Timber.d("Recording successful!")
+                onNavigateToCreateEcho(event.details)
             }
         }
     }
