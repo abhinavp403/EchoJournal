@@ -1,14 +1,10 @@
 package dev.abhinav.echojournal.navigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import dev.abhinav.echojournal.echos.presentation.create_echo.CreateEchoRoot
 import dev.abhinav.echojournal.echos.presentation.echos.EchosRoot
 import dev.abhinav.echojournal.echos.presentation.util.toCreateEchoRoute
 
@@ -29,15 +25,7 @@ fun NavigationRoot(
         }
 
         composable<NavigationRoute.CreateEcho> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Create Echo Screen",
-                )
-            }
+            CreateEchoRoot()
         }
     }
 }
