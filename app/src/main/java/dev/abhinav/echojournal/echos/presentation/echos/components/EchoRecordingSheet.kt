@@ -2,20 +2,14 @@
 
 package dev.abhinav.echojournal.echos.presentation.echos.components
 
-import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
@@ -27,23 +21,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.abhinav.echojournal.R
-import dev.abhinav.echojournal.core.presentation.designsystem.theme.buttonGradient
-import dev.abhinav.echojournal.core.presentation.designsystem.theme.primary90
-import dev.abhinav.echojournal.core.presentation.designsystem.theme.primary95
-import dev.abhinav.echojournal.core.presentation.designsystem.theme.Pause
 import dev.abhinav.echojournal.core.presentation.designsystem.theme.Microphone
+import dev.abhinav.echojournal.core.presentation.designsystem.theme.Pause
 
-private const val PRIMARY_BUTTON_BUBBLE_SIZE_DP = 128
 private const val SECONDARY_BUTTON_SIZE_DP = 48
 
 @Composable
@@ -82,7 +68,6 @@ fun SheetContent(
     onCompleteRecording: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val primaryBubbleSize = PRIMARY_BUTTON_BUBBLE_SIZE_DP.dp
     val secondaryButtonSize = SECONDARY_BUTTON_SIZE_DP.dp
 
     Column(
@@ -141,53 +126,26 @@ fun SheetContent(
                 )
             }
 
-            val interactionSource = remember {
-                MutableInteractionSource()
-            }
-            val isPressed by interactionSource.collectIsPressedAsState()
-            Box(
-                modifier = Modifier
-                    .size(primaryBubbleSize)
-                    .background(
-                        color = if(isRecording) {
-                            MaterialTheme.colorScheme.primary95
-                        } else Color.Transparent,
-                        shape = CircleShape
+            EchoBubbleFloatingActionButton(
+                showBubble = isRecording,
+                onClick = if(isRecording) {
+                    onCompleteRecording
+                } else onResumeClick,
+                icon = {
+                    Icon(
+                        imageVector = if (isRecording) {
+                            Icons.Default.Check
+                        } else Icons.Filled.Microphone,
+                        contentDescription = if (isRecording) {
+                            stringResource(R.string.finish_recording)
+                        } else {
+                            stringResource(R.string.resume_recording)
+                        },
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer
                     )
-                    .padding(10.dp)
-                    .background(
-                        color = if(isRecording) {
-                            MaterialTheme.colorScheme.primary90
-                        } else Color.Transparent,
-                        shape = CircleShape
-                    )
-                    .padding(16.dp)
-                    .background(
-                        brush = MaterialTheme.colorScheme.buttonGradient,
-                        shape = CircleShape
-                    )
-                    .clip(CircleShape)
-                    .clickable(
-                        interactionSource = interactionSource,
-                        indication = LocalIndication.current,
-                        onClick = if(isRecording) {
-                            onCompleteRecording
-                        } else onResumeClick
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = if(isRecording) {
-                        Icons.Default.Check
-                    } else Icons.Filled.Microphone,
-                    contentDescription = if(isRecording) {
-                        stringResource(R.string.finish_recording)
-                    } else {
-                        stringResource(R.string.resume_recording)
-                    },
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            }
+                },
+                primaryButtonSize = 72.dp
+            )
 
             FilledIconButton(
                 onClick = if(isRecording) {

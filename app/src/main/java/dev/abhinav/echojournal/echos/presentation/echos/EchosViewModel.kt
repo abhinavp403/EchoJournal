@@ -58,17 +58,20 @@ class EchosViewModel(
 
     fun onAction(action: EchosAction) {
         when (action) {
-            EchosAction.OnFabClick -> {
+            EchosAction.OnRecordFabClick -> {
                 requestAudioPermission()
                 _state.update { it.copy(
                     currentCaptureMethod = AudioCaptureMethod.STANDARD
                 ) }
             }
-            EchosAction.OnFabLongClick -> {
+            EchosAction.OnRequestPermissionQuickRecording -> {
                 requestAudioPermission()
                 _state.update { it.copy(
                     currentCaptureMethod = AudioCaptureMethod.QUICK
                 ) }
+            }
+            EchosAction.OnRecordButtonLongClick -> {
+                startRecording(captureMethod = AudioCaptureMethod.QUICK)
             }
             EchosAction.OnMoodChipClick -> {
                 _state.update { it.copy(
