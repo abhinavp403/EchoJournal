@@ -53,6 +53,7 @@ import dev.abhinav.echojournal.core.presentation.designsystem.text_fields.Transp
 import dev.abhinav.echojournal.core.presentation.designsystem.theme.secondary70
 import dev.abhinav.echojournal.core.presentation.designsystem.theme.secondary95
 import dev.abhinav.echojournal.echos.presentation.components.EchoMoodPlayer
+import dev.abhinav.echojournal.echos.presentation.create_echo.components.SelectMoodSheet
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -248,6 +249,21 @@ fun CreateEchoScreen(
                     }
                 )
             }
+        }
+
+        if(state.showMoodSelector) {
+            SelectMoodSheet(
+                selectedMood = state.selectedMood,
+                onMoodClick = {
+                    onAction(CreateEchoAction.OnMoodClick(it))
+                },
+                onDismiss = {
+                    onAction(CreateEchoAction.OnDismissMoodSelector)
+                },
+                onConfirmClick = {
+                    onAction(CreateEchoAction.OnConfirmMood)
+                }
+            )
         }
     }
 }
