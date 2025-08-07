@@ -53,6 +53,7 @@ import dev.abhinav.echojournal.core.presentation.designsystem.text_fields.Transp
 import dev.abhinav.echojournal.core.presentation.designsystem.theme.secondary70
 import dev.abhinav.echojournal.core.presentation.designsystem.theme.secondary95
 import dev.abhinav.echojournal.echos.presentation.components.EchoMoodPlayer
+import dev.abhinav.echojournal.echos.presentation.create_echo.components.EchoTopicsRow
 import dev.abhinav.echojournal.echos.presentation.create_echo.components.SelectMoodSheet
 import org.koin.androidx.compose.koinViewModel
 
@@ -182,6 +183,26 @@ fun CreateEchoScreen(
                 },
                 onTrackSizeAvailable = {
                     onAction(CreateEchoAction.OnTrackSizeAvailable(it))
+                }
+            )
+
+            EchoTopicsRow(
+                topics = state.topics,
+                addTopicText = state.addTopicText,
+                showCreateTopicOption = state.showCreateTopicOption,
+                showTopicSuggestions = state.showTopicSuggestions,
+                searchResults = state.searchResults,
+                onTopicClick = {
+                    onAction(CreateEchoAction.OnTopicClick(it))
+                },
+                onDismissTopicSuggestions = {
+                    onAction(CreateEchoAction.OnDismissTopicSuggestions)
+                },
+                onRemoveTopicClick = {
+                    onAction(CreateEchoAction.OnRemoveTopicClick(it))
+                },
+                onAddTopicTextChange = {
+                    onAction(CreateEchoAction.OnAddTopicTextChange(it))
                 }
             )
 
