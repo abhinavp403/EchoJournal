@@ -1,6 +1,7 @@
 package dev.abhinav.echojournal
 
 import android.app.Application
+import dev.abhinav.echojournal.core.database.di.databaseModule
 import dev.abhinav.echojournal.echos.di.echoModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,8 @@ class EchoJournalApp : Application() {
             androidContext(this@EchoJournalApp)
             modules(
                 appModule,
-                echoModule
+                echoModule,
+                databaseModule
             )
         }
     }
