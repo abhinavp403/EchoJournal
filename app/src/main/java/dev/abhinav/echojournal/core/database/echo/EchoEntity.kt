@@ -2,14 +2,14 @@ package dev.abhinav.echojournal.core.database.echo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import dev.abhinav.echojournal.echos.presentation.models.MoodUi
+import dev.abhinav.echojournal.echos.domain.echo.Mood
 
 @Entity
 data class EchoEntity(
     @PrimaryKey(autoGenerate = true)
     val echoId: Int = 0,
     val title: String,
-    val mood: MoodUi,
+    val mood: Mood,
     val recordedAt: Long,
     val note: String?,
     val audioFilePath: String,
