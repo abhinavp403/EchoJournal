@@ -8,6 +8,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import dev.abhinav.echojournal.core.presentation.designsystem.dropdowns.Selectable.Companion.asUnselectedItems
 import dev.abhinav.echojournal.echos.domain.audio.AudioPlayer
+import dev.abhinav.echojournal.echos.domain.echo.Echo
+import dev.abhinav.echojournal.echos.domain.echo.EchoDataSource
+import dev.abhinav.echojournal.echos.domain.echo.Mood
 import dev.abhinav.echojournal.echos.domain.recording.RecordingStorage
 import dev.abhinav.echojournal.echos.presentation.create_echo.components.CreateEchoEvent
 import dev.abhinav.echojournal.echos.presentation.echos.models.PlaybackState
@@ -33,12 +36,14 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.Instant
 import kotlin.time.Duration
 
 class CreateEchoViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val recordingStorage: RecordingStorage,
-    private val audioPlayer: AudioPlayer
+    private val audioPlayer: AudioPlayer,
+    private val echoDataSource: EchoDataSource
 ) : ViewModel() {
 
     private var hasLoadedInitialData = false
@@ -162,7 +167,7 @@ class CreateEchoViewModel(
     }
 
     private fun onSaveClick() {
-        if(recordingDetails.filePath == null) {
+        if(recordingDetails.filePath == null || !state.value.canSaveEcho) {
             return
         }
 
@@ -174,6 +179,23 @@ class CreateEchoViewModel(
                 eventChannel.send(CreateEchoEvent.FailedToSaveFile)
                 return@launch
             }
+
+            val currentState = state.value
+            val echo = Echo(
+                mood = currentState.mood?.let {
+                    Mood.valueOf(it.name)
+                } ?: throw IllegalStateException("Mood must be set before saving echo."),
+                title = currentState.titleText.trim(),
+                note = currentState.noteText.ifBlank { null },
+                topics = currentState.topics,
+                audioFilePath = savedFilePath,
+                audioPlaybackLength = currentState.playbackTotalDuration,
+                audioAmplitudes = recordingDetails.amplitudes,
+                recordedAt = Instant.now()
+            )
+
+            echoDataSource.insertEcho(echo)
+            eventChannel.send(CreateEchoEvent.EchoSuccessfullySaved)
         }
     }
 

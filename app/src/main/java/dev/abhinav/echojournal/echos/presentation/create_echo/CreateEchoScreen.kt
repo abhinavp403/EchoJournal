@@ -77,6 +77,9 @@ fun CreateEchoRoot(
                 Toast.makeText(context, context.getString(R.string.error_couldnt_save_file), Toast.LENGTH_LONG).show()
                 onConfirmLeave()
             }
+            CreateEchoEvent.EchoSuccessfullySaved -> {
+                onConfirmLeave()
+            }
         }
     }
 
