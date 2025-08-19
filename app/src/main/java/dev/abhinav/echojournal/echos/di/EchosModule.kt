@@ -10,6 +10,7 @@ import dev.abhinav.echojournal.echos.domain.audio.AudioPlayer
 import dev.abhinav.echojournal.echos.data.audio.AndroidAudioPlayer
 import dev.abhinav.echojournal.echos.domain.echo.EchoDataSource
 import dev.abhinav.echojournal.echos.data.echo.RoomEchoDataSource
+import dev.abhinav.echojournal.echos.presentation.settings.SettingsViewModel
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
@@ -23,4 +24,5 @@ val echoModule = module {
 
     viewModelOf(::EchosViewModel)
     viewModelOf(::CreateEchoViewModel)
+    viewModelOf(::SettingsViewModel)
 }
