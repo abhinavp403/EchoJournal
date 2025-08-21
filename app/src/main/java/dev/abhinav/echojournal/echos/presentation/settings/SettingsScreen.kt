@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.abhinav.echojournal.R
 import dev.abhinav.echojournal.core.presentation.designsystem.theme.bgGradient
+import dev.abhinav.echojournal.echos.presentation.settings.components.MoodCard
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -92,7 +93,10 @@ fun SettingsScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-
+            MoodCard(
+                selectedMood = state.selectedMood,
+                onMoodClick = { onAction(SettingsAction.OnMoodClick(it)) },
+            )
         }
     }
 }
